@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import { GET_CLIENTS } from '../graphql/queries'
 import { DELETE_CLIENT } from '../graphql/mutations'
 import { FaTrash }from 'react-icons/fa'
@@ -63,6 +63,7 @@ const Clients = () => {
       setOpen(false);
     };
 
+    
 
 
   

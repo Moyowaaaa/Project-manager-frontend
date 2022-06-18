@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import { gql,useQuery, useMutation } from '@apollo/client'
 import ProjectsCard from './ProjectsCard'
 import { GET_PROJECTS } from '../graphql/queries'
@@ -49,6 +49,12 @@ const Projects = () => {
       setOpen(false);
     };
 
+    useEffect(() => {
+      if (dataR) {
+        setClientId(dataR.clients[0].id)
+      }
+    }, [dataR])
+
 
     const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -71,7 +77,7 @@ const Projects = () => {
 
     
   return (
-    <div className='h-max border-2 border-[blue]'>
+    <div className='h-max '>
 
 <Button onClick={handleOpen}>New Project</Button>
 
@@ -83,6 +89,7 @@ const Projects = () => {
       >
         <Box sx={style}>
         <form onSubmit={onSubmit}>
+          <h1>Add Project</h1>
           <Typography id="modal-modal-title" variant="h6" component="h2">
           <TextField id="standard-basic" className='w-full' label="Name" variant="standard"  value={name}  onChange={(e) => setName(e.target.value)}  />
           </Typography>
@@ -90,11 +97,14 @@ const Projects = () => {
           <TextField id="standard-basic" className='w-full' label="Description" variant="standard"  value={description}  onChange={(e) => setDescription(e.target.value)}  />
           </Typography>
           <Typography>
-          <select className='w-full mt-4 outline-none' value={clientId} onChange={(e) => setClientId(e.target.value)}>
+            <div className='mt-4'>
+            <label className=''>User</label>
+          <select className='w-full  outline-none border-b-2 border-[blue] py-2' value={clientId} onChange={(e) => setClientId(e.target.value)}>
                 {dataR.clients.map(client => (
                     <option key={client.id} value={client.id}>{client.name}</option>
                 ))}
                 </select>
+                </div>
 
                 <br></br>
           <button className='my-4 bg-[white] text-[black]' type="submit">Submit</button>
